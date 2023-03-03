@@ -31,10 +31,10 @@ app.use(bodyParser.json());
 // app.post('/admin/why', upload.single('img'));
 // app.post('/admin/edit-serv/:id', upload.single('img'));
 /********************************************************************************* */
-// const adminRoutes = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const mainRoutes = require('./routes/main');
 app.use('/students', mainRoutes);
-// app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes);
 /********************************************************************************* */
 mongoose.connect(dbUrl)
     .then(resu => {

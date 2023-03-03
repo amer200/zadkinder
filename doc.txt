@@ -2,7 +2,7 @@
 
 1) register
 
-route = http://localhost:3000/students/register
+route = http://localhost:5000/students/register
 method = post
 data=                               Note all data required 
     name: String
@@ -21,3 +21,16 @@ response
  msg: "student saved"
 }
 if status =200 & msg = "student saved"  : ok
+
+/****************************************************************/
+2) getstudents (for admin only)
+route = http://localhost:5000/admin/students/studentNumber
+
+response
+{
+    data = [
+        {
+            student details
+        }
+    ]
+}

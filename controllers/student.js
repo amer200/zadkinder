@@ -27,7 +27,6 @@ exports.regNewStudent = (req, res) => {
     })
     newStudent.save()
         .then(s => {
-            console.log(s)
             res.status(200).json({
                 msg: "student saved"
             })
@@ -38,4 +37,22 @@ exports.regNewStudent = (req, res) => {
                 msg: err
             })
         })
+}
+exports.getStudents = async (req, res) => {
+    try {
+        let x = req.params.studentsNumber;
+        if (!x) {
+            let x = 10;
+        }
+        const students = await Student.find().limit(x)
+        res.status(200).json({
+            data: students
+        })
+    } catch {
+        console.log(err)
+        res.status(500).json({
+            msg: err
+        })
+    }
+
 }
