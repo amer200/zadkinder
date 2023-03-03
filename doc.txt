@@ -26,6 +26,10 @@ if status =200 & msg = "student saved"  : ok
 2) getstudents (for admin only)
 route = http://localhost:5000/admin/students/studentNumber
 
+                       note studentNumber must be intger value or use
+                                 route = http://localhost:5000/admin/students
+                                 to get  only 10 students 
+                       authorithation will be add later 
 response
 {
     data = [
