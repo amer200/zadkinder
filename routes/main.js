@@ -3,7 +3,7 @@ const routes = express.Router();
 const studentController = require('../controllers/student');
 
 
-routes.post('/student-reg', studentController.regNewStudent);
+routes.post('/register', studentController.regNewStudent);
 
 
 module.exports = routes;

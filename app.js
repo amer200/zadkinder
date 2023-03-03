@@ -5,11 +5,13 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbUrl = process.env.DB_URL;
 const port = process.env.PORT;
-
+var cors = require('cors');
+app.use(cors())
 /********************************************************************************* */
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 /********************************************************************************* */
 // const storage = multer.diskStorage({
 //     destination: function (req, file, cb) {
