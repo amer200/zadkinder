@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 /********************************************************************************* */
 // const adminRoutes = require('./routes/admin');
 const mainRoutes = require('./routes/main');
-app.use('/', mainRoutes);
+app.use('/students', mainRoutes);
 // app.use('/admin', adminRoutes);
 /********************************************************************************* */
 mongoose.connect(dbUrl)

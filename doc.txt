@@ -1,0 +1,23 @@
+                                         students
+
+1) register
+
+route = http://localhost:3000/students/register
+method = post
+data=                               Note all data required 
+    name: String
+    gender: String
+    nationality: String
+    cid: String
+    kinder: String
+    time: String
+    fathername: String
+    fatherno: String
+    motherno: String
+    address: String
+    bus: String
+response 
+{
+ msg: "student saved"
+}
+if status =200 & msg = "student saved"  : ok
