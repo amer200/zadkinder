@@ -27,7 +27,7 @@ if status =200 & msg = "student saved"  : ok
 route = http://localhost:5000/admin/students/studentNumber
 
                        note studentNumber must be intger value or use
-                                 route = http://localhost:5000/admin/students
+                                 route = http://localhost:5000/admin/students/0
                                  to get  only 10 students 
                        authorithation will be add later 
 response

@@ -12,7 +12,7 @@ exports.regNewStudent = (req, res) => {
     const motherno = req.body.motherno;
     const address = req.body.address;
     const bus = req.body.bus;
-    
+
     const newStudent = new Student({
         name: name,
         gender: gender,
@@ -42,8 +42,8 @@ exports.regNewStudent = (req, res) => {
 exports.getStudents = async (req, res) => {
     try {
         let x = req.params.studentsNumber;
-        if (!x) {
-             x = 10;
+        if (x = 0) {
+            x = 10;
         }
         const students = await Student.find().limit(x)
         res.status(200).json({
