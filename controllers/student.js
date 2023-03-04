@@ -1,17 +1,18 @@
 const Student = require('../models/student');
 exports.regNewStudent = (req, res) => {
-    const name = req.body.post.name;
-    const gender = req.body.post.gender;
-    const nationality = req.body.post.nationality;
-    const cid = req.body.post.cid;
-    const kinder = req.body.post.kinder;
-    const time = req.body.post.time;
-    const fathername = req.body.post.fathername;
-    const fatherno = req.body.post.fatherno;
-    const motherno = req.body.post.motherno;
-    const address = req.body.post.address;
-    const bus = req.body.post.bus;
 
+    const name = req.body.name;
+    const gender = req.body.gender;
+    const nationality = req.body.nationality;
+    const cid = req.body.cid;
+    const kinder = req.body.kinder;
+    const time = req.body.time;
+    const fathername = req.body.fathername;
+    const fatherno = req.body.fatherno;
+    const motherno = req.body.motherno;
+    const address = req.body.address;
+    const bus = req.body.bus;
+    
     const newStudent = new Student({
         name: name,
         gender: gender,
@@ -42,7 +43,7 @@ exports.getStudents = async (req, res) => {
     try {
         let x = req.params.studentsNumber;
         if (!x) {
-            let x = 10;
+             x = 10;
         }
         const students = await Student.find().limit(x)
         res.status(200).json({
