@@ -22,8 +22,21 @@ response
 }
 if status =200 & msg = "student saved"  : ok
 
-/****************************************************************/
-2) getstudents (for admin only)
+/********************************* admin *******************************/
+1)login
+url = http://localhost:5000/admin/login
+method = POST
+body{
+    "password": type String,  plz add ADMINPASS=123 in .env just for test 
+}
+2) logout
+url = http://localhost:5000/admin/login
+method = GET
+response on success
+{
+    msg: "ok"
+}
+3) getstudents (for admin only)
 route = http://localhost:5000/admin/students/studentNumber
 
                        note studentNumber must be intger value or use

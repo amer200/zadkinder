@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbUrl = process.env.DB_URL;
 const port = process.env.PORT;
+const jwt = require("jsonwebtoken");
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 var cors = require('cors');
 app.use(cors())
 /********************************************************************************* */
@@ -31,6 +34,17 @@ app.use(bodyParser.json());
 // app.post('/admin/why', upload.single('img'));
 // app.post('/admin/edit-serv/:id', upload.single('img'));
 /********************************************************************************* */
+const store = new MongoDBStore({
+    uri: dbUrl,
+    collection: 'mySessions'
+});
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: store
+}))
+/******************************************************************************** */
 const adminRoutes = require('./routes/admin');
 const mainRoutes = require('./routes/main');
 app.use('/students', mainRoutes);
