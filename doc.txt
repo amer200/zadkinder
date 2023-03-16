@@ -51,8 +51,27 @@ response
         }
     ]
 }
-
-
-
-
-
+//////////////
+4) remove student (admin only)
+url = route = http://localhost:5000/admin/remove-student/{id}
+method = get
+response 
+{
+    msg: "ok"
+}
+////////////////
+5) edit student
+url = route = http://localhost:5000/admin/edit-student/{id}
+method =  post
+data=                               Note all data required 
+    name: String
+    gender: String
+    nationality: String
+    cid: String
+    kinder: String
+    time: String
+    fathername: String
+    fatherno: String
+    motherno: String
+    address: String
+    bus: String
