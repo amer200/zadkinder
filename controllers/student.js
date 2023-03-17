@@ -62,7 +62,8 @@ exports.removeStudent = (req, res) => {
     Student.findByIdAndRemove(id)
         .then(s => {
             res.status(200).json({
-                msg: "ok"
+                msg: "ok",
+                student: s
             })
         })
         .catch(err => {

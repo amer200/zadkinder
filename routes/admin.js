@@ -6,6 +6,6 @@ const adminMiddelwares = require('../middlewares/admin');
 routes.post("/login", adminControllers.logIn);
 routes.get("/logout", adminMiddelwares.isAdmin, adminControllers.logOut);
 routes.get('/students/:studentsNumber', adminMiddelwares.isAdmin, studentController.getStudents);
-routes.get('/remove-student/:id', adminMiddelwares.isAdmin, studentController.regNewStudent);
+routes.get('/remove-student/:id', adminMiddelwares.isAdmin, studentController.removeStudent);
 routes.post('/edit-student/:id', adminMiddelwares.isAdmin, studentController.editStudent);
 module.exports = routes;
