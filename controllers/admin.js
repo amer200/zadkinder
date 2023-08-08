@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 exports.logIn = (req, res) => {
     const password = req.body.password;
-    if (password == process.env.ADMINPASS) {
+    if (password == process.env.ADMIN_PASS) {
         req.session.admin = true;
         const user = {
             id: "123",

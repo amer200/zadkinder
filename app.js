@@ -51,10 +51,10 @@ app.use('/students', mainRoutes);
 app.use('/admin', adminRoutes);
 /********************************************************************************* */
 mongoose.connect(dbUrl)
-    .then(resu => {
+    .then(res => {
         console.log('db connection done !');
         app.listen(port, () => {
-            console.log('app conneted on port ' + port)
+            console.log(`Server runs on: http://localhost:${port}`)
         })
     })
     .catch(err => {
