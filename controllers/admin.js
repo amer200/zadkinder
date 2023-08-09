@@ -51,7 +51,7 @@ exports.changePassword = async (req, res) => {
                 await admin.save()
 
                 res.status(200).json({
-                    msg: "Password is changed successfully"
+                    msg: "Password changed successfully"
                 })
             } else {
                 res.status(400).json({
