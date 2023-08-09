@@ -14,11 +14,11 @@ exports.isAdmin = (req, res, next) => {
                 msg: err
             })
         }
-        if (user.user.roll == 'admin') {
+        if (user.user.role == 'admin') {
             req.user = user.user
             next();
         } else {
-            console.log(user.user.roll)
+            console.log(user.user.role)
             res.status(304).json({
                 msg: "not allowed"
             })
