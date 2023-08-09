@@ -46,12 +46,11 @@ exports.changePassword = async (req, res) => {
         if (admin) {
             const isMatch = await bcrypt.compareSync(password, admin.password)
             if (isMatch) {
-                const hashedPass = await bcrypt.hash(newPassword, 8)
-                admin.password
+                admin.password = await bcrypt.hash(newPassword, 8)
                 await admin.save()
 
                 res.status(200).json({
-                    msg: "Password changed successfully"
+                    msg: "ok"
                 })
             } else {
                 res.status(400).json({

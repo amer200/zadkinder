@@ -27,16 +27,36 @@ if status =200 & msg = "student saved"  : ok
 url = http://localhost:5000/admin/login
 method = POST
 body{
-    "password": type String,  plz add ADMINPASS=123 in .env just for test 
+    "email":"admin@admin.com"
+    "password": type String,  // 123
 }
-2) logout
-url = http://localhost:5000/admin/login
+response on success :
+{
+    msg: "ok",
+    token: type String
+}
+
+2)change password
+url = http://localhost:5000/admin/change-password
+method = POST
+body{
+    "email":"admin@admin.com",
+    "password": type String,    //old password
+    "newPassword": type String
+}
+response on success :
+{
+    msg: "ok"
+}
+
+3) logout
+url = http://localhost:5000/admin/logout
 method = GET
 response on success
 {
     msg: "ok"
 }
-3) getstudents (for admin only)
+4) getstudents (for admin only)
 route = http://localhost:5000/admin/students/studentNumber
 
                        note studentNumber must be intger value or use
@@ -52,7 +72,7 @@ response
     ]
 }
 //////////////
-4) remove student (admin only)
+5) remove student (admin only)
 url = route = http://localhost:5000/admin/remove-student/{id}
 method = get
 response 
@@ -60,7 +80,7 @@ response
     msg: "ok"
 }
 ////////////////
-5) edit student
+6) edit student
 url = route = http://localhost:5000/admin/edit-student/{id}
 method =  post
 data=                               Note all data required 
