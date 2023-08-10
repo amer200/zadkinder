@@ -11,9 +11,9 @@ exports.logIn = async (req, res) => {
         const admin = await Admin.findOne({ email })
 
         if (admin) {
-            const isMatch = await bcrypt.compareSync(password, admin.password)
-
-            if (isMatch) {
+            // const isMatch = await bcrypt.compareSync(password, admin.password)
+            // if (isMatch) {
+            if (password == admin.password) {
                 const user = {
                     id: "123",
                     name: "admin",
@@ -44,9 +44,10 @@ exports.changePassword = async (req, res) => {
         let admin = await Admin.findOne({ email })
 
         if (admin) {
-            const isMatch = await bcrypt.compareSync(password, admin.password)
-            if (isMatch) {
-                admin.password = await bcrypt.hash(newPassword, 8)
+            // const isMatch = await bcrypt.compareSync(password, admin.password)
+            // if (isMatch) {
+            if (password == admin.password) {
+                // admin.password = await bcrypt.hash(newPassword, 8)
                 await admin.save()
 
                 res.status(200).json({
