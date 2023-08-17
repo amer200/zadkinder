@@ -56,22 +56,28 @@ response on success
 {
     msg: "ok"
 }
-4) getstudents (for admin only)
-route = http://localhost:5000/admin/students/studentNumber
 
-                       note studentNumber must be intger value or use
-                                 route = http://localhost:5000/admin/students/0
-                                 to get  only 10 students 
-                       authorithation will be add later 
-response
+/////////////////////////
+4) getstudents (for admin only)
+route = http://localhost:5000/admin/students?page={Number}&limit={Number}
+
+by default page=1, limit=20 (if you don't send params using route : http://localhost:5000/admin/students)
+
+response on success
 {
+    results: Number,    // number of students per page
+    pagination: {
+                currentPage: Number,
+                limit: Number,
+                numberOfPages: Number
+                },
     data = [
         {
-            student details
+            student data per page
         }
     ]
 }
-//////////////
+////////////////////////
 5) remove student (admin only)
 url = route = http://localhost:5000/admin/remove-student/{id}
 method = get
@@ -79,7 +85,7 @@ response
 {
     msg: "ok"
 }
-////////////////
+/////////////////////////
 6) edit student
 url = route = http://localhost:5000/admin/edit-student/{id}
 method =  post
@@ -95,3 +101,82 @@ data=                               Note all data required
     motherno: String
     address: String
     bus: String
+
+
+
+
+
+/////////////////////////
+7) get student data by id (admin only)
+url = http://localhost:5000/admin/students/:studentId
+method = GET
+response on success
+{
+    data: {
+        name: String
+        gender: String
+        nationality: String
+        cid: String
+        kinder: String
+        time: String
+        fathername: String
+        fatherno: String
+        motherno: String
+        address: String
+        bus: String
+        password: String
+        activated: Boolean
+    }
+}
+
+//////////////////////
+
+8) set student password (admin only)
+url = http://localhost:5000/admin/students/:studentId
+method = PUT
+body {
+    password:String
+    }
+response on success
+{
+    msg: "ok"
+}
+
+//////////////////////
+
+9) student login
+url = http://localhost:5000/students/login
+method = POST
+body = { 
+        cid: String,
+        password: String 
+    } 
+
+response on success
+{
+    msg: "ok",
+    token: String
+}
+//////////////////////
+
+10) student profile (logged in student only)
+url = http://localhost:5000/students/student-profile
+method = GET
+response on success
+{
+    data: {
+        name: String
+        gender: String
+        nationality: String
+        cid: String
+        kinder: String
+        time: String
+        fathername: String
+        fatherno: String
+        motherno: String
+        address: String
+        bus: String
+        password: String
+        activated: true
+    }
+}
