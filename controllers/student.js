@@ -1,17 +1,15 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt')
 const Student = require('../models/student');
-exports.regNewStudent = (req, res) => {
 
-    const name = req.body.name;
-    const gender = req.body.gender;
-    const nationality = req.body.nationality;
-    const cid = req.body.cid;
-    const kinder = req.body.kinder;
-    const time = req.body.time;
-    const fathername = req.body.fathername;
-    const fatherno = req.body.fatherno;
-    const motherno = req.body.motherno;
-    const address = req.body.address;
-    const bus = req.body.bus;
+/** Students registration */
+exports.regNewStudent = async (req, res) => {
+    const { name, gender, nationality, cid, kinder, time, fathername, fatherno, motherno, address, bus } = req.body
+
+    const student = await Student.findOne({ cid })
+    if (student) {
+        res.status(401).json({ msg: `Student with this cid ${cid} is already registered` })
+    }
 
     const newStudent = new Student({
         name: name,
@@ -29,7 +27,8 @@ exports.regNewStudent = (req, res) => {
     newStudent.save()
         .then(s => {
             res.status(200).json({
-                msg: "student saved"
+                msg: "ok",
+                data: newStudent
             })
         })
         .catch(err => {
@@ -39,18 +38,125 @@ exports.regNewStudent = (req, res) => {
             })
         })
 }
+exports.loginStudent = async (req, res) => {
+    const { cid, password } = req.body
+
+    try {
+        const student = await Student.findOne({ cid })
+        if (!student) {
+            res.status(404).json({ msg: `Wrong cid or password` })
+        }
+
+        if (!student.activated) {
+            res.status(400).json({ msg: `Sorry, this account is not activated yet.` })
+        }
+
+        const isMatch = await bcrypt.compare(password, student.password)
+        if (!isMatch) {
+            res.status(404).json({ msg: `Wrong cid or password` })
+        }
+
+        const user = {
+            id: student._id,
+            name: "student",
+            role: "student"
+        }
+        const token = jwt.sign({ user: user }, process.env.ACCESS_TOKEN)
+        res.status(200).json({
+            msg: 'ok',
+            token
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(`Server error`)
+    }
+}
+
+/** With Student Auth */
+exports.getStudentProfile = async (req, res) => {
+    const { id } = req.user
+
+    try {
+        const student = await Student.findById(id)
+        if (!student) {
+            res.status(400).json(`No student for this id ${id}`)
+        }
+
+        res.status(200).json({ data: student })
+    } catch (err) {
+        res.status(500).json({
+            msg: err.message
+        })
+    }
+
+}
+
+/** With Admin Auth */
+exports.setStudentPassword = async (req, res) => {
+    const { id } = req.params
+    const { password } = req.body;
+
+    try {
+        const student = await Student.findById(id)
+        if (!student) {
+            res.status(400).json({ msg: `No student for this id ${id}` })
+        }
+
+        student.password = await bcrypt.hash(password, 8)
+        student.activated = true
+
+        await student.save()
+        res.status(200).json({ msg: "ok" })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            msg: "Server error"
+        })
+    }
+}
+
+
 exports.getStudents = async (req, res) => {
     try {
-        let x = req.params.studentsNumber;
-        if (x = 0) {
-            x = 10;
-        }
-        const students = await Student.find().limit(x)
+        const page = +req.query.page || 1
+        const limit = +req.query.limit || 20 // max number of items (students) per page
+        const skip = (page - 1) * limit
+
+        const studentsPerPage = await Student.find().limit(limit).skip(skip)
+
+        const studentsNo = await Student.countDocuments()
+        const numberOfPages = (studentsNo % limit == 0) ? studentsNo / limit : Math.floor(studentsNo / limit) + 1;
+
         res.status(200).json({
-            data: students
+            results: studentsPerPage.length,
+            pagination: {
+                currentPage: page,
+                limit,
+                numberOfPages
+            },
+            data: studentsPerPage
         })
-    } catch {
+    } catch (err) {
         console.log(err)
+        res.status(500).json({
+            msg: err.message
+        })
+    }
+
+}
+exports.getStudentById = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const student = await Student.findById(id)
+        if (!student) {
+            res.status(400).json(`No student for this id ${id}`)
+        }
+
+        res.status(200).json({ data: student })
+    } catch (err) {
         res.status(500).json({
             msg: err.message
         })
