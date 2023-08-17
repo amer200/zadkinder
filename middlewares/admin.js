@@ -5,14 +5,14 @@ exports.isAdmin = (req, res, next) => {
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
-        res.status(400).json({
+        return res.status(400).json({
             msg: "token is required"
         })
     }
 
     jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 msg: err
             })
         }

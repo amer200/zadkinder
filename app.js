@@ -46,9 +46,9 @@ app.use(session({
 }))
 /******************************************************************************** */
 const adminRoutes = require('./routes/admin');
-const mainRoutes = require('./routes/main');
-app.use('/students', mainRoutes);
+const studentRoutes = require('./routes/student');
 app.use('/admin', adminRoutes);
+app.use('/students', studentRoutes);
 /********************************************************************************* */
 mongoose.connect(dbUrl)
     .then(res => {
